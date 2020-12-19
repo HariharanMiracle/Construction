@@ -4,127 +4,69 @@ use CodeIgniter\Controller;
 use App\Models\CustomerModel;
 
 class Customer extends Controller{
-	public function create(){
-        // session()->start();
+	public function index(){
+		$customerModel = new CustomerModel();
+		$data['nav'] = "customer";
+		$data['customer'] = $customerModel->orderBy('id', 'DESC')->findAll();
+		echo view('head', $data);
+		echo view('customer');
+		return view('footer');
+	}
 
-		// if($_SESSION['isLoggedIn'] == 1 && $_SESSION['user']['privilege'] == "ADMIN" && $_SESSION['user']['status'] == "ACTIVE"){
-			// $settingModel = new SettingModel();
-			// $data['setting'] = $settingModel->orderBy('id', 'ASC')->findAll();
-			// $data['nav'] = "tags";
-			// echo view('templates/admin-header', $data);
-			return view('create-customer');
-			// return view('templates/footer');
-		// }
-		// else{
-		// 	session()->destroy();
-		// 	session()->start();
-		// 	$_SESSION['errLoginMsg'] = "Unauthorized access !!!";
-		// 	return redirect()->to(base_url());
-		// }
+	public function create(){
+			$data['nav'] = "customer";
+			echo view('head', $data);
+			echo view('create-customer');
+			return view('footer');
 	}
 
 	public function edit($id = null){
-		// session()->start();
-		
-		// if($_SESSION['isLoggedIn'] == 1 && $_SESSION['user']['privilege'] == "ADMIN" && $_SESSION['user']['status'] == "ACTIVE"){
-			// $settingModel = new SettingModel();
-			// $data['setting'] = $settingModel->orderBy('id', 'ASC')->findAll();
-			// $data['nav'] = "tags";
+			$data['nav'] = "customer";
 			$customerModel = new CustomerModel();
-	        $data['customer'] = $customerModel->where('id', $id)->first();
-			// echo view('templates/admin-header', $data);
-			return view('edit-customer', $data);
-			// return view('templates/footer');
-		// }
-		// else{
-		// 	session()->destroy();
-		// 	session()->start();
-		// 	$_SESSION['errLoginMsg'] = "Unauthorized access !!!";
-		// 	return redirect()->to(base_url());
-		// }        
+			$data['customer'] = $customerModel->where('id', $id)->first();
+			echo view('head', $data);
+			echo view('edit-customer');
+			return view('footer');
 	}
 
 	public function delete($id = null){
-        // session()->start();
-
-		// if($_SESSION['isLoggedIn'] == 1 && $_SESSION['user']['privilege'] == "ADMIN" && $_SESSION['user']['status'] == "ACTIVE"){
 			$customerModel = new CustomerModel();
             $data['customer'] = $customerModel->where('id', $id)->delete();
-            echo $data['customer']['id'];
-	        // return redirect()->to(base_url('/AdminPanel/tags'));
-		// }
-		// else{
-		// 	session()->destroy();
-		// 	session()->start();
-		// 	$_SESSION['errLoginMsg'] = "Unauthorized access !!!";
-		// 	return redirect()->to(base_url());
-		// }    
+	        return redirect()->to(base_url('/Customer'));
 	}
 
 	public function search(){
-        // session()->start();
-
-		// if($_SESSION['isLoggedIn'] == 1 && $_SESSION['user']['privilege'] == "ADMIN" && $_SESSION['user']['status'] == "ACTIVE"){
-			// $settingModel = new SettingModel();
-			// $data['setting'] = $settingModel->orderBy('id', 'ASC')->findAll();
-			// $data['nav'] = "tags";
 			$customerModel = new CustomerModel();
 			$search = $this->request->getVar('search');
-			$data['customer'] = $customerModel->like('name', $search)->orlike('phone', $search)->orderBy('name', 'ASC')->find();
-			// echo view('Templates/admin-header', $data);
+			$data['customer'] = $customerModel->like('customer_name', $search)->orlike('customer_phone', $search)->orderBy('id', 'DESC')->find();
+			echo view('head', $data);
 			echo view('customer');
-			// return view('Templates/footer');
-		// }
-		// else{
-		// 	session()->destroy();
-		// 	session()->start();
-		// 	$_SESSION['errLoginMsg'] = "Unauthorized access !!!";
-		// 	return redirect()->to(base_url());
-		// }    
+			return view('footer');
 	}
 
 	public function store(){
-        // session()->start();
-
-		// if($_SESSION['isLoggedIn'] == 1 && $_SESSION['user']['privilege'] == "ADMIN" && $_SESSION['user']['status'] == "ACTIVE"){
 			$customerModel = new CustomerModel();
 			$data = [
-	            'name' => $this->request->getVar('name'),
-	            'address' => $this->request->getVar('address'),
-	            'phone' => $this->request->getVar('phone'),
+	            'customer_name' => $this->request->getVar('customer_name'),
+	            'customer_address' => $this->request->getVar('customer_address'),
+				'customer_phone' => $this->request->getVar('customer_phone'),
+				'created_on' => date("Y-m-d h:i:s"),
+	            'updated_on' => null,
 	        ];
             $save = $customerModel->insert($data);
-            echo $save;
-	        // return redirect()->to(base_url('/AdminPanel/tags'));	
-		// }
-		// else{
-		// 	session()->destroy();
-		// 	session()->start();
-		// 	$_SESSION['errLoginMsg'] = "Unauthorized access !!!";
-        //     return redirect()->to(base_url());
-		// }    
+	        return redirect()->to(base_url('/Customer'));	
 	}
 
 	public function update(){
-        // session()->start();
-
-		// if($_SESSION['isLoggedIn'] == 1 && $_SESSION['user']['privilege'] == "ADMIN" && $_SESSION['user']['status'] == "ACTIVE"){
 			$customerModel = new CustomerModel();
 	        $id = $this->request->getVar('id');
 	        $data = [
-	            'name' => $this->request->getVar('name'),
-	            'address' => $this->request->getVar('address'),
-	            'phone' => $this->request->getVar('phone'),
+	            'customer_name' => $this->request->getVar('customer_name'),
+	            'customer_address' => $this->request->getVar('customer_address'),
+				'customer_phone' => $this->request->getVar('customer_phone'),
+	            'updated_on' => date("Y-m-d h:i:s"),
 	        ];
-            $save = $customerModel->update($id, $data);
-            echo $save
-	        // return redirect()->to(base_url('/AdminPanel/tags'));
-		// }
-		// else{
-		// 	session()->destroy();
-		// 	session()->start();
-		// 	$_SESSION['errLoginMsg'] = "Unauthorized access !!!";
-		// 	return redirect()->to(base_url());
-		// }    
+			$save = $customerModel->update($id, $data);
+	        return redirect()->to(base_url('/Customer'));	
 	}
 }

@@ -5,5 +5,5 @@ use CodeIgniter\Model;
 class CustomerModel extends Model
 {
     protected $table = 'customer';
-    protected $allowedFields = ['name', 'address', 'phone'];
+    protected $allowedFields = ['customer_name', 'customer_address', 'customer_phone', 'created_on', 'updated_on'];
 }

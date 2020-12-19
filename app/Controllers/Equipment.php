@@ -38,7 +38,7 @@ class Equipment extends Controller{
 	public function search(){
             $equipmentModel = new EquipmentModel();
 			$search = $this->request->getVar('search');
-			$data['equipment'] = $equipmentModel->like('staff_number', $search)->orlike('staff_name', $search)->orderBy('id', 'DESC')->find();
+			$data['equipment'] = $equipmentModel->like('equipment_no', $search)->orlike('equipment_name', $search)->orderBy('id', 'DESC')->find();
 			echo view('head', $data);
 			echo view('equipment');
 			return view('footer');

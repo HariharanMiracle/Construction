@@ -4,7 +4,7 @@
 <main class="container">
     <h3>Edit Customer</h3>
 	<div class="container">
-		<form action="<?php echo base_url('Customer/update');?>" name="customer_create" id="customer_create" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+		<form action="<?php echo base_url('Customer/update');?>" name="customer_edit" id="customer_edit" method="post" accept-charset="utf-8" enctype="multipart/form-data">
 			<input type="hidden" name="id" id="id" class="form-control" value="<?php echo $customer['id']; ?>" required>
 
             <div class="form-group">

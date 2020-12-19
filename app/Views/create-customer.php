@@ -12,7 +12,7 @@
 
             <div class="form-group">
                 <label for="customer_address">Customer_address <span id="customer_address_err" style="color:red;">*</span></label>
-                <textarea id="customer_address" name="customer_address" class="form-control" placeholder="Please enter customer_address"></textarea>
+                <textarea id="customer_address" name="customer_address" class="form-control" placeholder="Please enter customer_address" required></textarea>
             </div>
 
             <div class="form-group">

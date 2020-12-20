@@ -109,11 +109,19 @@ class Project extends Controller{
 			return view('footer');
 	}
 
-	// public function delete($id = null){
-	// 		$projectModel = new ProjectModel();
-    //         $data['project'] = $projectModel->where('id', $id)->delete();
-	//         return redirect()->to(base_url('/Project'));
-	// }
+	public function delete($id = null){
+            $projectModel = new ProjectModel();
+            
+            $project_reqModel = new Project_requirementsModel();
+            $data['project_requirements'] = $project_reqModel->where('project_id', $id)->orderBy('id', 'DESC')->findAll();
+
+            foreach($data['project_requirements'] as $obj){
+                $data['project_requirements'] = $project_reqModel->where('id', $obj['id'])->delete();
+            }
+
+            $data['project'] = $projectModel->where('id', $id)->delete();
+	        return redirect()->to(base_url('/Project'));
+	}
 
 	public function search(){
             $projectModel = new ProjectModel();

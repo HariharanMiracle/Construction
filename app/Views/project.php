@@ -32,18 +32,19 @@
                                     echo '<tr>';
                                         echo '<th>No</th>';
                                         echo '<th>Customer</th>';
-                                        echo '<th>Project_no</th>';
-                                        echo '<th>Project_Name</th>';
+                                        echo '<th>No</th>';
+                                        echo '<th>Name</th>';
                                         echo '<th>Location</th>';
                                         echo '<th>Business</th>';
                                         echo '<th>Incharge</th>';
-                                        echo '<th>Start_date</th>';
-                                        echo '<th>End_date</th>';
-                                        echo '<th>Total_personnel_cost</th>';
-                                        echo '<th>Service_charge</th>';
-                                        echo '<th>Consultancy_fee</th>';
+                                        echo '<th>Start date</th>';
+                                        echo '<th>End date</th>';
+                                        echo '<th>Personnel cost</th>';
+                                        echo '<th>Service charge</th>';
+                                        echo '<th>Consultancy fee</th>';
                                         echo '<th>Edit</th>';
                                         echo '<th>Delete</th>';
+                                        echo '<th>Project & Equipment Requirement</th>';
                                     echo '</tr>';
                                 echo '</thead>';
 
@@ -74,6 +75,7 @@
                                             echo '<td>'.$obj['project_consultancy_fee'].'</td>';
                                             echo '<td><a class="a-orange" href="'.base_url().'/Project/edit/'.$obj['id'].'" alt="Edit Project - '.$obj['project_name'].'"><i class="far fa-edit"></i></a></td>';
                                             echo '<td><a class="a-orange" href="'.base_url().'/Project/delete/'.$obj['id'].'" alt="Delete Project - '.$obj['project_name'].'"><i class="far fa-trash-alt"></i></a></td>';
+                                            echo '<td><a class="a-orange" href="'.base_url().'/Project/req_form/'.$obj['id'].'" alt="req_form Project - '.$obj['project_name'].'"><i class="far fa-edit"></i></a></td>';
                                         echo '</tr>';
                                         $count++;
                                     }

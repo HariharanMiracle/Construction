@@ -6,8 +6,74 @@ use App\Models\CustomerModel;
 use App\Models\StaffModel;
 use App\Models\Project_requirementsModel;
 use App\Models\JobModel;
+use App\Models\EquipmentModel;
+use App\Models\Equipment_resourceModel;
 
 class Project extends Controller{
+    public function req_form($id = null){
+        $data['nav'] = "project";
+
+        $projectModel = new ProjectModel();
+        $data['project'] = $projectModel->where('id', $id)->first();
+        
+        $equipment_resourceModel = new Equipment_resourceModel();
+        $data['equipment_resource'] = $equipment_resourceModel->where('project_id', $id)->orderBy('id', 'DESC')->findAll();
+        
+        echo count($data['equipment_resource']);
+        if(count($data['equipment_resource']) > 0){
+            echo view('head', $data);
+            echo '<br/><br/><br/>';
+            echo '<div class="row">
+                <div class="col-12 text-center">
+                    <h4>Form already filled</h4>
+                    <a href="'.base_url('Project').'">Bact to product</a>
+                </div>
+            </div>';
+            echo '<br/><br/><br/>';
+            return view('footer');
+        }
+
+        $project_reqModel = new Project_requirementsModel();
+        $data['project_requirements'] = $project_reqModel->where('project_id', $id)->orderBy('id', 'DESC')->findAll();
+
+		$jobModel = new JobModel();
+        $data['job'] = $jobModel->orderBy('id', 'DESC')->findAll();
+
+		$staffModel = new StaffModel();
+        $data['staff'] = $staffModel->orderBy('contract', 'ASC')->findAll();
+
+        $equipmentModel = new EquipmentModel();
+        $data['equipment'] = $equipmentModel->orderBy('id', 'DESC')->findAll();
+
+        echo view('head', $data);
+        echo view('req_form-project');
+        return view('footer');
+    }
+
+    public function resourceStore(){
+        $equipmentModel = new EquipmentModel();
+        $data['equipment'] = $equipmentModel->orderBy('id', 'DESC')->findAll();
+
+        $project_id = $this->request->getVar('project_id');
+
+        // $equipment_resourceModel = new Equipment_resourceModel();
+        // foreach($data['equipment'] as $equipmentObj){
+        //     if($this->request->getVar('quantity'.$equipmentObj['id']) != 0){
+        //         $data = [
+        //             'equipment_id' => $equipmentObj['id'],
+        //             'project_id' => $project_id,
+        //             'quantity' => $this->request->getVar('quantity'.$equipmentObj['id']),
+        //             'required_duration' => $this->request->getVar('duration'.$equipmentObj['id']),
+        //             'created_on' => date("Y-m-d h:i:s"),
+        //             'updated_on' => null,
+        //         ];
+    
+        //         $save = $equipment_resourceModel->insert($data);
+        //     }
+        // }
+        return redirect()->to(base_url('/Project'));	
+    }
+
 	public function index(){
 		$data['nav'] = "project";
 		$projectModel = new ProjectModel();

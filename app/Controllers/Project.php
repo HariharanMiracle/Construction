@@ -20,18 +20,18 @@ class Project extends Controller{
         $data['equipment_resource'] = $equipment_resourceModel->where('project_id', $id)->orderBy('id', 'DESC')->findAll();
         
         echo count($data['equipment_resource']);
-        if(count($data['equipment_resource']) > 0){
-            echo view('head', $data);
-            echo '<br/><br/><br/>';
-            echo '<div class="row">
-                <div class="col-12 text-center">
-                    <h4>Form already filled</h4>
-                    <a href="'.base_url('Project').'">Bact to product</a>
-                </div>
-            </div>';
-            echo '<br/><br/><br/>';
-            return view('footer');
-        }
+        // if(count($data['equipment_resource']) > 0){
+        //     echo view('head', $data);
+        //     echo '<br/><br/><br/>';
+        //     echo '<div class="row">
+        //         <div class="col-12 text-center">
+        //             <h4>Form already filled</h4>
+        //             <a href="'.base_url('Project').'">Bact to product</a>
+        //         </div>
+        //     </div>';
+        //     echo '<br/><br/><br/>';
+        //     return view('footer');
+        // }
 
         $project_reqModel = new Project_requirementsModel();
         $data['project_requirements'] = $project_reqModel->where('project_id', $id)->orderBy('id', 'DESC')->findAll();
@@ -56,6 +56,25 @@ class Project extends Controller{
 
         $project_id = $this->request->getVar('project_id');
 
+        $staffModel = new StaffModel();
+        $data['staff'] = $staffModel->orderBy('contract', 'ASC')->findAll();
+
+        foreach($data['staff'] as $staffObj){
+            $staffId = $this->request->getVar('staff'.$staffObj['id']);
+            
+            // echo $staffObj['staff_name'].' - '.$staffId;
+            // echo '<br/>';
+        }
+
+        // $staff = $this->request->getVar('staff1');
+
+
+
+
+        // foreach ($this->input->post('staff') as $checkbox)
+        // {
+        //     echo $checkbox;
+        // } 
         // $equipment_resourceModel = new Equipment_resourceModel();
         // foreach($data['equipment'] as $equipmentObj){
         //     if($this->request->getVar('quantity'.$equipmentObj['id']) != 0){
@@ -71,7 +90,7 @@ class Project extends Controller{
         //         $save = $equipment_resourceModel->insert($data);
         //     }
         // }
-        return redirect()->to(base_url('/Project'));	
+        // return redirect()->to(base_url('/Project'));	
     }
 
 	public function index(){

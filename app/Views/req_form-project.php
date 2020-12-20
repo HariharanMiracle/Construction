@@ -38,7 +38,7 @@
                                                     foreach($staff as $staffObj){
                                                         if($staffObj['staff_role'] == $jobObj['id']){
                                                             ?>
-                                                                <input type="checkbox" id="" name="" value="<?php echo $staffObj['id']; ?>"> <?php echo $staffObj['staff_name']; ?>
+                                                                <input type="checkbox" id="staff<?php echo $staffObj['id']; ?>" name="staff<?php echo $staffObj['id']; ?>" value="<?php echo $staffObj['id']; ?>"> <?php echo $staffObj['staff_name']; ?>
                                                                 <?php
                                                                     if($staffObj['contract'] == 0){
                                                                         echo '(permenant staff)';
